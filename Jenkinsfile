@@ -4,10 +4,12 @@ pipeline {
     stages{
         stage("build"){
             steps{
-                echo "installing npm packages...."
+               
                 nodejs("Node-20.10.0") {
                     dir('nextjs_13_beta_tests'){
+                        echo "installing npm packages...."
                         sh 'npm install'
+                        echo "building the application...."
                         sh 'npm run build'
                     }
                    
