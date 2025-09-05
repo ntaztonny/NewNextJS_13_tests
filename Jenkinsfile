@@ -1,7 +1,8 @@
 pipeline {
     agent any
-nodejs("Node-20.10.0") {
+
     stages{
+        nodejs("Node-20.10.0") {
         dir('nextjs_13_beta_tests'){
         stage("build"){
             steps{
