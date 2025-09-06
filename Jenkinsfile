@@ -1,10 +1,10 @@
 pipeline {
     agent any
-    environment {
+    /*environment {
        // if credentials, consider the credential plugin for secrete binding in the pipeline
        echo 'These are the environmental variables being used'
        SERVER_CREDENTIALS = credentials('global_ticketMarketplace_pipeline_credentials')
-    }
+    }*/
     tools{
         echo "Here is a list of tools being used..."
     }
@@ -59,12 +59,13 @@ pipeline {
     
     post{
         always {
-
+             echo 'Pipeline finished....'
         }
         success {
-
+            echo 'Pipeline build, deploy successful....'
         }
         failure {
+            echo 'Pipeline failed and build, test, and deploy stages have failed....'
 
         }
 
