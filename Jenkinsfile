@@ -1,6 +1,6 @@
 pipeline {
     agent any
-    environment {
+    /*environment {
        // if credentials, consider the credential plugin for secrete binding in the pipeline
        echo 'These are the environmental variables being used'
        SERVER_CREDENTIALS = credentials('global_ticketMarketplace_pipeline_credentials')
@@ -10,7 +10,7 @@ pipeline {
     }
     parameters {
         echo "Here is a list of parameters being used!!"
-    }
+    }*/
 
     stages{
         stage("build"){
