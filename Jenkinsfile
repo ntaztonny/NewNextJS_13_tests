@@ -1,5 +1,12 @@
 pipeline {
     agent any
+    /**** To d **
+    - Scripts
+    - Parameters
+    - Enviroment variables
+    - tools 
+    as additions to Jenkins    
+    ***/
     /*environment {
        // if credentials, consider the credential plugin for secrete binding in the pipeline
        echo 'These are the environmental variables being used'
@@ -63,9 +70,15 @@ pipeline {
         }
         success {
             echo 'Pipeline build, deploy successful....'
+            mail to: 'atozpp@yahoo.com',
+                 subject: "🚨 Deployment succedded: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
+                 body: "The build ${env.JOB_NAME},  build number ${env.BUILD_NUMBER} has succeded; please Check the build logs at: ${env.BUILD_URL}"
         }
         failure {
-            echo 'Pipeline failed and build, test, and deploy stages have failed....'
+            echo 'Pipeline failed; A build, test, or deploy stage may have failed....'
+            mail to: 'atozpp@yahoo.com',
+                 subject: "🚨 Deployment Failed: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
+                 body: "The build ${env.JOB_NAME},  build number ${env.BUILD_NUMBER} has failed; please Check the build logs at: ${env.BUILD_URL}"
 
         }
 
