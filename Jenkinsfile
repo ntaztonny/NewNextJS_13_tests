@@ -64,7 +64,7 @@ pipeline {
         }
          stage("deploy"){
             steps{
-                echo "Deploying ${VERSION} of the application...."
+                echo "Deploying ${params.VERSION} of the application...."
             }
         }
     }
@@ -75,9 +75,9 @@ pipeline {
         }
         success {
             echo 'Pipeline build, deploy successful....'
-            // mail to: 'atozpp@yahoo.com',
-            //      subject: "🚨 Deployment succedded: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
-            //      body: "The build ${env.JOB_NAME},  build number ${env.BUILD_NUMBER} has succeded; please Check the build logs at: ${env.BUILD_URL}"
+            mail to: 'atozpp@yahoo.com',
+                 subject: "🚨 Deployment succedded: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
+                 body: "The build ${env.JOB_NAME},  build number ${env.BUILD_NUMBER} has succeded; please Check the build logs at: ${env.BUILD_URL}"
         }
         failure {
             echo 'Pipeline failed; A build, test, or deploy stage may have failed....'
