@@ -1,0 +1,44 @@
+pipeline {
+    agent any
+
+    environment {
+        AWS_BRANCH = "main"       // set your branch here, or use params
+        AWS_APP_ID = "your-app-id"
+    }
+
+    stages {
+        stage('Backend Build') {
+            steps {
+                sh '''
+                    npm ci --cache .npm --prefer-offline
+                    npx ampx pipeline-deploy --branch $AWS_BRANCH --app-id $AWS_APP_ID
+                '''
+            }
+        }
+
+        stage('Frontend Build') {
+            steps {
+                // build and also setup the output directory
+                sh '''
+                    npm run build
+                '''
+            }
+        }
+
+        stage('Archive Artifacts') {
+            steps {
+                // This matches your frontend.artifacts.dist setup
+                archiveArtifacts artifacts: 'dist/**/*', fingerprint: true
+            }
+        }
+
+        stage('Cache (Optional)') {
+            steps {
+                // Jenkins doesn't cache paths the same way Amplify does.
+                // You can use a plugin like "Pipeline Caching" if needed:
+                // cache(maxCacheSize: 2, caches: [path(".npm"), path("node_modules")]) { ... }
+                echo "Caching handled separately in Jenkins (not YAML-style)."
+            }
+        }
+    }
+}
